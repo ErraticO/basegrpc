@@ -80,39 +80,20 @@ if __name__ == '__main__':
 ```
 #### Test
 ```python
-from basegrpc import grpc_pb2, grpc_pb2_grpc
-import grpc
-import time
-from grpc_health.v1 import health_pb2_grpc
-from grpc_health.v1 import health_pb2
-from google.protobuf import struct_pb2
-from google.protobuf.json_format import MessageToDict
-
-
-def run(request):
-    channel = grpc.insecure_channel('127.0.0.1:50051')
-    stub = grpc_pb2_grpc.MLStub(channel)
-
-    request_data = struct_pb2.Struct()
-    request_data.update(request)
-
-    response = stub.Predict(grpc_pb2.MLRequest(request=request_data))
-    response = MessageToDict(response)
-    print(f"{response['response']['response']}")
-
-    health_stub = health_pb2_grpc.HealthStub(channel)
-    health_response = health_stub.Check(health_pb2.HealthCheckRequest())
-    print(f"{health_response}")
+from basegrpc.grpc_client import GrpcClient
 
 
 if __name__ == "__main__":
-    start = time.time()
-    run({"data_X": [[5.1, 3.5]]})
-    print(time.time()-start)
+    grpc_client = GrpcClient(bind_address='127.0.0.1:50051')
+    data = {"data_X": [[5.1, 3.5]]}
+    response = grpc_client.request(request_data=data)
+    print("response: ", response)
+
+    health_status = grpc_client.health_check()
+    print("health status: ", health_status)
     
 # output:
 # [0.0]
 # status: SERVING
-# 
-# 0.01999950408935547
+
 ```
