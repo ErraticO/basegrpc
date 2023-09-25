@@ -31,7 +31,7 @@ pip install basegrpc
 ### Quickstart
 #### Prerequisites
 * Input / output: please refer to the [struct](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/struct.proto) of gRPC
-* Model file: `/examples/logic.mdl`(It can be placed in any directory of the project)
+* Model file: `/examples/logic.mdl`
 * Model class files: the file name and class name must be the same(`Logic.py` and `class Logic`)
 ```python
 import pickle
