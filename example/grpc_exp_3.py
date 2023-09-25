@@ -3,7 +3,7 @@ from basegrpc.grpc_module import ml_module
 import glob
 
 
-def find_module_path(module_name=""):
+def find_module_path(module_name="LogicV1"):
     module_paths = [file.replace("\\", ".").replace("/", ".").replace(".py", "") for file in
                     glob.glob('**/*.py', recursive=True)]
     if module_name == "":
@@ -17,7 +17,6 @@ def find_module_path(module_name=""):
                 return module_path
 
 def run():
-    ml_module.module_name = "LogicV1"
     ml_module.find_module_path = find_module_path
     grpc_service = BaseService()
     grpc_service.run()
@@ -27,5 +26,5 @@ if __name__ == '__main__':
     run()
 
 # output:
-# [PID 10168] gRPC load module: Logic
-# [PID 10168] gRPC server start...
+# [PID 7640] gRPC load module: LogicV1
+# [PID 7640] gRPC server start...
